@@ -1,112 +1,134 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Mail, Github, Linkedin } from 'lucide-react';
+import { motion } from 'framer-motion';
 
-const SOCIALS = [
-  { label: 'GitHub', url: 'https://github.com/YOUR_GITHUB_USERNAME', icon: Github },
-  { label: 'Gmail', url: 'mailto:YOUR_GMAIL@gmail.com', icon: Mail },
-  { label: 'LinkedIn', url: 'https://linkedin.com/in/YOUR_LINKEDIN_USERNAME', icon: Linkedin },
+const SECTIONS = [
+  { label: '01 IDENTITY', hash: '#home' },
+  { label: '02 PROJECT', hash: '#projects' },
+  { label: '03 SYSTEM', hash: '#systems' },
+  { label: '04 INQUIRY', hash: '#contact' },
 ];
 
-const LINKS = [
-  { name: 'Home', hash: '#home' },
-  { name: 'About', hash: '#about' },
-  { name: 'Projects', hash: '#projects' },
-  { name: 'Contact', hash: '#contact' },
+const SYS_STATS = [
+  { label: 'SYS:VER', value: '4.8.2' },
+  { label: 'LATENCY', value: '2.4ms' },
+  { label: 'INFERENCE', value: '99.98%' },
+  { label: 'SECURITY', value: '256-SHAK / AES-256' },
 ];
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const toggle = () => setIsOpen((prev) => !prev);
-
   return (
-    <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white/80 backdrop-blur-md border-b border-gray-200' : 'bg-transparent'
-      } dark:${scrolled ? 'bg-gray-900/80 border-gray-800' : ''}`}
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      className={`fixed top-0 w-full z-50 border-b border-white/5 transition-all duration-300 ${
+        scrolled ? 'bg-[#0a0a0a]/90 backdrop-blur-md shadow-lg' : 'bg-transparent'
+      }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          <div className="flex-shrink-0 flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">YN</span>
-            </div>
-            <span className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
-              Your<span className="text-primary-600 dark:text-primary-400">Name</span>
-            </span>
-          </div>
-
-          <div className="hidden md:flex items-center gap-6">
-            {LINKS.map((link) => (
-              <a
-                key={link.name}
-                href={link.hash}
-                className="text-sm font-medium transition-colors text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
-                onClick={() => setIsOpen(false)}
+        <div className="flex items-center justify-between h-16">
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="flex items-center gap-3 cursor-pointer"
+          >
+            <div className="flex -space-x-1">
+              <motion.span
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 0.5 }}
+                className="w-7 h-7 rounded bg-[#f43f5e] flex items-center justify-center text-[10px] font-black text-black leading-none"
               >
-                {link.name}
-              </a>
+                N
+              </motion.span>
+              <motion.span
+                whileHover={{ rotate: -360 }}
+                transition={{ duration: 0.5 }}
+                className="w-7 h-7 rounded border border-[#f43f5e]/50 flex items-center justify-center text-[10px] font-black text-[#f43f5e] leading-none"
+              >
+                H
+              </motion.span>
+            </div>
+            <span className="text-[10px] font-bold tracking-widest text-[#f43f5e] uppercase opacity-70">portfolio core</span>
+          </motion.div>
+
+          <div className="hidden md:flex items-center gap-2 text-[10px] font-mono text-[#666] uppercase tracking-wider">
+            {SECTIONS.map((s, i) => (
+              <motion.a
+                key={s.label}
+                href={s.hash}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ y: -2, color: '#f43f5e' }}
+                className="px-2 py-1 rounded border border-transparent hover:border-[#f43f5e]/40 transition-colors cursor-pointer"
+              >
+                {s.label}
+              </motion.a>
             ))}
-            <a
-              href="#contact"
-              className="text-sm font-medium text-primary-600 dark:text-primary-400 hover:underline"
-              onClick={() => setIsOpen(false)}
-            >
-              Contact
-            </a>
           </div>
 
-          <div className="flex items-center gap-3">
-            <button
-              onClick={toggle}
-              className="md:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 rounded-lg"
-              aria-label="Open menu"
+          <div className="hidden md:flex items-center gap-3 text-[10px] font-mono">
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4 }}
+              className="flex items-center gap-1 text-[#4ade80]"
             >
-              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
+              <motion.span
+                animate={{ scale: [1, 1.2, 1], opacity: [1, 0.5, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="w-1.5 h-1.5 rounded-full bg-[#4ade80]"
+              />
+              <span className="text-[#4ade80]">ONLINE / OFFIC</span>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5 }}
+              className="flex flex-col items-end gap-0.5"
+            >
+              <span className="text-white font-bold">SYS:VER 4.8.2</span>
+              <span className="text-[#666]">ACTIVE VECTOR // UK &amp; AI</span>
+            </motion.div>
+            {SYS_STATS.map((s, i) => (
+              <motion.div
+                key={s.label}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6 + i * 0.1 }}
+                whileHover={{ scale: 1.05, borderColor: '#f43f5e' }}
+                className="px-2 py-0.5 rounded border border-[#1a1a1a] bg-[#0f0f0f] flex items-center gap-1 cursor-pointer transition-colors"
+              >
+                <span className="text-[#f43f5e]">{s.label}:</span>
+                <span className={`text-white ${s.label === 'INFERENCE' ? 'text-[#4ade80]' : ''}`}>{s.value}</span>
+              </motion.div>
+            ))}
+            <motion.img
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1, type: 'spring' }}
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              src="/profile.jpg"
+              alt="Nadir Hussain"
+              className="w-9 h-9 rounded-full border border-[#f43f5e]/40 cursor-pointer object-cover"
+            />
           </div>
+
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            className="md:hidden p-1.5 text-[#888] hover:text-[#f43f5e]"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
+          </motion.button>
         </div>
       </div>
-
-      {isOpen && (
-        <div className="md:hidden bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4">
-            {LINKS.map((link) => (
-              <a
-                key={link.name}
-                href={link.hash}
-                className="block px-4 py-2 text-sm font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                {link.name}
-              </a>
-            ))}
-            <div className="pt-2">
-              <div className="flex items-center gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
-                {SOCIALS.map(({ label, url, icon: Icon }) => (
-                  <a
-                    key={label}
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-lg flex items-center justify-center text-gray-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-                    aria-label={label}
-                  >
-                    <Icon className="w-5 h-5" />
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </nav>
+    </motion.nav>
   );
 }

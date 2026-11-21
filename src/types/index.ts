@@ -1,18 +1,18 @@
 export interface Project {
   id: string;
+  cassette: number;
   title: string;
+  tagline: string;
   description: string;
-  image: string;
   tags: string[];
-  github: string;
-  live?: string;
-  featured: boolean;
+  inspectLabel: string;
+  badge: string;
 }
 
 export interface SocialLink {
   label: string;
   url: string;
-  icon: 'github' | 'gmail' | 'linkedin' | 'twitter';
+  icon: 'github' | 'gmail' | 'linkedin' | 'twitter' | 'x' | 'globe' | 'map-pin';
 }
 
 export interface ContactFormData {
