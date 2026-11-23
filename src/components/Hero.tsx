@@ -42,27 +42,29 @@ export default function Hero() {
     <section id="home" className="relative pt-20 pb-12 lg:pt-36 lg:pb-24 overflow-hidden">
       <motion.div
         animate={{
-          x: [0, 100, 0],
-          opacity: [0.3, 0.5, 0.3],
+          x: [0, 60, 0],
+          opacity: [0.2, 0.35, 0.2],
         }}
         transition={{
           duration: 20,
           repeat: Infinity,
           ease: 'easeInOut',
         }}
-        className="absolute top-0 left-1/4 w-72 h-72 bg-[#f43f5e]/10 rounded-full blur-[120px]"
+        className="absolute top-0 left-1/4 w-72 h-72 bg-[#f43f5e]/10 rounded-full will-change-transform"
+        style={{ filter: 'blur(60px)', transform: 'translateZ(0)' }}
       />
       <motion.div
         animate={{
-          x: [0, -100, 0],
-          opacity: [0.3, 0.5, 0.3],
+          x: [0, -60, 0],
+          opacity: [0.2, 0.35, 0.2],
         }}
         transition={{
           duration: 15,
           repeat: Infinity,
           ease: 'easeInOut',
         }}
-        className="absolute bottom-0 right-1/4 w-72 h-72 bg-[#4ade80]/10 rounded-full blur-[120px]"
+        className="absolute bottom-0 right-1/4 w-72 h-72 bg-[#4ade80]/10 rounded-full will-change-transform"
+        style={{ filter: 'blur(60px)', transform: 'translateZ(0)' }}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -171,10 +173,10 @@ export default function Hero() {
           </div>
 
           <motion.div
-            initial={{ opacity: 0, x: 50, rotateY: 20 }}
-            animate={{ opacity: 1, x: 0, rotateY: 0 }}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="relative hidden lg:block flex items-center justify-center"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative flex items-center justify-center"
           >
             <motion.div
               animate={{ y: [0, -10, 0] }}
@@ -186,7 +188,8 @@ export default function Hero() {
                   rotate: [0, 5, -5, 0],
                 }}
                 transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute -inset-1 bg-gradient-to-r from-[#f43f5e] to-[#4ade80] rounded-2xl blur opacity-20"
+                className="absolute -inset-1 bg-gradient-to-r from-[#f43f5e] to-[#4ade80] rounded-2xl opacity-20"
+                style={{ filter: 'blur(8px)' }}
               />
               <div className="relative panel p-1 z-10 border border-[#1a1a1a]">
                 <div className="flex gap-2 mb-3">
@@ -207,7 +210,16 @@ export default function Hero() {
                   />
                 </div>
                 <div className="bg-[#050505] rounded-xl overflow-hidden border border-[#1a1a1a] shadow-2xl">
-                  <img src="/profile.jpg" alt="Nadir Hussain" className="w-full h-auto block" />
+                  <img
+                    src="/profile.jpg"
+                    alt="Nadir Hussain"
+                    width={800}
+                    height={1000}
+                    loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
+                    className="w-full h-auto block"
+                  />
                   <div className="p-4">
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-[10px] font-mono text-[#666]">FOCUS FIELD</span>
